@@ -29,6 +29,17 @@
     (is (= (slurp (io/file "test-resources" "issue_11" "issue_11_expected.clj"))
            (slurp (io/file tmp-dir "test-resources" "issue_11" "issue_11.clj"))))))
 
+(deftest issue-12-test
+  (let [tmp-dir (System/getProperty "java.io.tmpdir")]
+    (with-out-str
+      (main/-main "--opts"
+                  (str {:paths [(.getPath (io/file "test-resources" "issue_12"))]
+                        :aggressive? false
+                        :interactive? false
+                        :out-dir tmp-dir})))
+    (is (= (slurp (io/file "test-resources" "issue_12" "issue_12_expected.clj"))
+           (slurp (io/file tmp-dir "test-resources" "issue_12" "issue_12.clj"))))))
+
 (deftest text-report-test
   (is (= (str/trim "
 test-resources/app/api.clj:3:1 api/private-lib-function
